@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Swift AllMan Style Formatting
+title: Swift AllMan Style formatting
+excerpt_separator: "\n---\n"
 ---
 
 Recently i read this article from Erica Sadun:
@@ -8,7 +9,7 @@ Recently i read this article from Erica Sadun:
 
 I've always preferred Allman Style rather than 1TBS Style.
 
-For objective-C i was using [BBUncrustify](https://github.com/benoitsan/BBUncrustifyPlugin-Xcode) to automatically format my code to Allman Style.
+For objective-C i was using [BBUncrustify](https://github.com/benoitsan/BBUncrustifyPlugin-Xcode) to automatically format my code to Allman Style on save.
 
 However, neither clang-format nor Uncrustify work at the moment for Swift langage.
 
