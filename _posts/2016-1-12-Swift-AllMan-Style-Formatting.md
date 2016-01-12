@@ -1,4 +1,7 @@
-# Swift AllMan Style Formatting
+---
+layout: post
+title: Swift AllMan Style Formatting
+---
 
 Recently i read this article from Erica Sadun:
 [swift-bracing](http://ericasadun.com/2015/12/28/swift-bracing/)
