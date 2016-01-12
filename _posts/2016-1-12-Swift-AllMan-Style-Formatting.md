@@ -8,8 +8,6 @@ Recently i read this article from Erica Sadun:
 
 I've always preferred Allman Style rather than 1TBS Style.
 
-<!--more-->
-
 For objective-C i was using [BBUncrustify](https://github.com/benoitsan/BBUncrustifyPlugin-Xcode) to automatically format my code to Allman Style on save.
 
 However, neither clang-format nor Uncrustify work at the moment for Swift langage.
@@ -19,3 +17,4 @@ I published a quick hack to support Allman Style:
 
 Swimat fork with Allman style option: [https://github.com/giln/Swimat](https://github.com/giln/Swimat).
 
+<!--more-->
