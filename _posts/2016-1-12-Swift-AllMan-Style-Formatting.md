@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Swift AllMan Style formatting
-excerpt_separator: "\n---\n"
+excerpt_separator: <!--more-->
 ---
 
 Recently i read this article from Erica Sadun:
@@ -17,3 +17,5 @@ I found this project called Swimat which does Swift Source code formatting.
 I published a quick hack to support Allman Style:
 
 Swimat fork with Allman style option: [https://github.com/giln/Swimat](https://github.com/giln/Swimat).
+
+<!--more-->
