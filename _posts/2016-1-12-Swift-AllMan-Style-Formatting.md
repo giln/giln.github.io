@@ -1,13 +1,14 @@
 ---
 layout: post
 title: Swift AllMan Style formatting
-excerpt_separator: <!--more-->
 ---
 
 Recently i read this article from Erica Sadun:
 [swift-bracing](http://ericasadun.com/2015/12/28/swift-bracing/)
 
 I've always preferred Allman Style rather than 1TBS Style.
+
+<!--more-->
 
 For objective-C i was using [BBUncrustify](https://github.com/benoitsan/BBUncrustifyPlugin-Xcode) to automatically format my code to Allman Style on save.
 
@@ -18,4 +19,3 @@ I published a quick hack to support Allman Style:
 
 Swimat fork with Allman style option: [https://github.com/giln/Swimat](https://github.com/giln/Swimat).
 
-<!--more-->
