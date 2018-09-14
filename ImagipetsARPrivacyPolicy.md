@@ -26,6 +26,5 @@ We do not collect and share any personal information.
 
 No ad companies collect data through our service.
 
-We do not disclosure any data.
-
 Gil Nakache
+
