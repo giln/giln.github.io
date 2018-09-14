@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: standalone
 title: Imagipets AR Privacy Policy
 permalink: /ImagipetsARPrivacyPolicy/
 ---
