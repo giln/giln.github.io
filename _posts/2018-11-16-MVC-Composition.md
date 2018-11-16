@@ -32,7 +32,7 @@ So how do you compose ViewControllers? Just use Apple UIKit API available since 
 
 
 ```swift
-/*
+	/*
       If the child controller has a different parent controller, it will first be removed from its current parent
       by calling removeFromParentViewController. If this method is overridden then the super implementation must
       be called.
@@ -108,80 +108,80 @@ On the other hand we have the other View Controllers (ListViewController and Seg
 Let's see an example of the ListViewController code:
 
 ```swift
-import UIKit
-
-public protocol Listable {
-    var text: String { get }
-    var longText: String { get }
-    var imageUrl: String { get }
-}
-
-class ListViewController: UITableViewController {
-
-    // MARK: - Variables
-
-    public var list = [Listable]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-
-    // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.register(ImageAndTextTableViewCell.self, forCellReuseIdentifier: ImageAndTextTableViewCell.defaultReuseIdentifier)
-    }
-
-    // MARK: - UITableViewDataSource
-
-    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return list.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImageAndTextTableViewCell.defaultReuseIdentifier, for: indexPath)
-
-        let element = list[indexPath.row]
-
-        if let imageCell = cell as? ImageAndTextTableViewCell {
-            imageCell.layout.label.text = element.text
-            imageCell.layout.rightImageView.url = URL(string:element.imageUrl)
-        }
-
-        return cell
-    }
-}
+	import UIKit
+	
+	public protocol Listable {
+	    var text: String { get }
+	    var longText: String { get }
+	    var imageUrl: String { get }
+	}
+	
+	class ListViewController: UITableViewController {
+	
+	    // MARK: - Variables
+	
+	    public var list = [Listable]() {
+	        didSet {
+	            tableView.reloadData()
+	        }
+	    }
+	
+	    // MARK: - Lifecycle
+	
+	    override func viewDidLoad() {
+	        super.viewDidLoad()
+	
+	        tableView.rowHeight = UITableView.automaticDimension
+	        tableView.register(ImageAndTextTableViewCell.self, forCellReuseIdentifier: ImageAndTextTableViewCell.defaultReuseIdentifier)
+	    }
+	
+	    // MARK: - UITableViewDataSource
+	
+	    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+	        return list.count
+	    }
+	
+	    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	        let cell = tableView.dequeueReusableCell(withIdentifier: ImageAndTextTableViewCell.defaultReuseIdentifier, for: indexPath)
+	
+	        let element = list[indexPath.row]
+	
+	        if let imageCell = cell as? ImageAndTextTableViewCell {
+	            imageCell.layout.label.text = element.text
+	            imageCell.layout.rightImageView.url = URL(string:element.imageUrl)
+	        }
+	
+	        return cell
+	    }
+	}
 ```
 
 To decouple even more our ListViewController and make it even more reusable we created a Listable protocol. This protocol contains the elements the ViewController needs to display it's views. This way we can display any Model in our app using the same ViewController as long as it conforms to Listable protocol:
 
 ```swift
-extension App: Listable {
-    public var text: String {
-        return name
-    }
-
-    public var longText: String {
-        return summary
-    }
-
-    public var imageUrl: String {
-        return thumbImageUrl
-    }
-}
+	extension App: Listable {
+	    public var text: String {
+	        return name
+	    }
+	
+	    public var longText: String {
+	        return summary
+	    }
+	
+	    public var imageUrl: String {
+	        return thumbImageUrl
+	    }
+	}
 ```
 
 Data is passed to the view controller as an array of Listable. We simply react to changes in data by using didSet syntax to reload our TableView.
 
 ```swift
-public var list = [Listable]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+	public var list = [Listable]() {
+	        didSet {
+	            tableView.reloadData()
+	        }
+	    }
 ```
 
 Since the ListViewController just waits for data, who's responsibility is it to provide it?
@@ -189,57 +189,57 @@ Since the ListViewController just waits for data, who's responsibility is it to 
 For that we use our AppsViewCoordinator:
 
 ```swift
-import UIKit
-
-public class AppsViewCoordinator: UIViewController, UITableViewDelegate {
-    // MARK: - Public Variables
-
-    public var appType: AppType = .free {
-        didSet {
-            title = appType.rawValue
-        }
-    }
-
-    // MARK: - Private Variables
-
-    private let appsViewController = ListViewController()
-
-    private var apps = [App]()
-
-    // MARK: - Lifecycle
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        title = appType.rawValue
-        appsViewController.tableView.delegate = self
-
-        add(asChildViewController: appsViewController)
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        let ressource = AppStoreRessource()
-
-        ressource.getApps(top: 100, appType: appType) { apps, _ in
-            //
-            self.apps = apps
-            self.appsViewController.list = apps
-        }
-    }
-
-    // MARK: - UITableViewDelegate
-
-    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController = DetailViewController()
-
-        let detail = apps[indexPath.row]
-
-        detailViewController.detail = detail
-        navigationController?.pushViewController(detailViewController, animated: true)
-    }
-}
+	import UIKit
+	
+	public class AppsViewCoordinator: UIViewController, UITableViewDelegate {
+	    // MARK: - Public Variables
+	
+	    public var appType: AppType = .free {
+	        didSet {
+	            title = appType.rawValue
+	        }
+	    }
+	
+	    // MARK: - Private Variables
+	
+	    private let appsViewController = ListViewController()
+	
+	    private var apps = [App]()
+	
+	    // MARK: - Lifecycle
+	
+	    public override func viewDidLoad() {
+	        super.viewDidLoad()
+	
+	        title = appType.rawValue
+	        appsViewController.tableView.delegate = self
+	
+	        add(asChildViewController: appsViewController)
+	    }
+	
+	    public override func viewWillAppear(_ animated: Bool) {
+	        super.viewWillAppear(animated)
+	
+	        let ressource = AppStoreRessource()
+	
+	        ressource.getApps(top: 100, appType: appType) { apps, _ in
+	            //
+	            self.apps = apps
+	            self.appsViewController.list = apps
+	        }
+	    }
+	
+	    // MARK: - UITableViewDelegate
+	
+	    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+	        let detailViewController = DetailViewController()
+	
+	        let detail = apps[indexPath.row]
+	
+	        detailViewController.detail = detail
+	        navigationController?.pushViewController(detailViewController, animated: true)
+	    }
+	}
 ```
 
 This coordinator has 2 responsibilities, fetching the data to display in the ListViewController and navigation (by being the delegate for the ListViewController tableView).
@@ -247,7 +247,7 @@ This coordinator has 2 responsibilities, fetching the data to display in the Lis
 Embedding the ListViewController is done with this line:
 
 ```swift
-add(asChildViewController: appsViewController)
+	add(asChildViewController: appsViewController)
 ```
 
 which uses the UIViewController+Container extension:
@@ -289,82 +289,82 @@ It's responsiblity is to layout the segmented control above the content, and als
 Again this ViewController is highly reusable and can be used to display any view controllers throughout the application.
 
 ```swift
-public class SegmentedViewController: UIViewController {
-
-    // MARK: - Public variables
-
-    /// List of ViewControllers. View Controller Titles are used as segment titles.
-    public var items = [UIViewController]() {
-        didSet {
-            // Remove previous viewControllers
-            for previousItem in oldValue {
-                self.remove(viewControllerToRemove: previousItem)
-            }
-            // Remove segments
-            segmentedControl.removeAllSegments()
-
-            // Add new segments and first viewController
-            for (index, item) in items.enumerated() {
-                segmentedControl.insertSegment(withTitle: item.title, at: index, animated: false)
-
-                if index == 0 {
-                    segmentedControl.selectedSegmentIndex = 0
-                    selectController(at: index)
-                }
-            }
-        }
-    }
-
-    // MARK: - Private variables
-
-    private let segmentedControl = UISegmentedControl()
-    private let containerView = UIView()
-    private let stackView = UIStackView()
-    private let topStackView = UIStackView()
-
-    // MARK: - LifeCycle
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        topStackView.axis = .vertical
-        topStackView.alignment = .center
-        topStackView.distribution = .equalSpacing
-        topStackView.isLayoutMarginsRelativeArrangement = true
-        topStackView.preservesSuperviewLayoutMargins = true
-
-        view.backgroundColor = .white
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-
-        view.addSubview(stackView)
-        view.anchor(view: stackView, useSafeAnchors: false)
-
-        stackView.addArrangedSubview(topStackView)
-        topStackView.addArrangedSubview(segmentedControl)
-        stackView.addArrangedSubview(containerView)
-
-        segmentedControl.addTarget(self, action: #selector(segmentDidChange(segment:)), for: .valueChanged)
-    }
-
-    // MARK: - Actions
-
-    @objc
-    private func segmentDidChange(segment: UISegmentedControl) {
-
-        selectController(at: segment.selectedSegmentIndex)
-
-        print(segment.selectedSegmentIndex)
-    }
-
-    private func selectController(at index: Int ) {
-
-        let item = items[index]
-
-        add(asChildViewController: item, anchored: true, subview: containerView)
-    }
-}
+	public class SegmentedViewController: UIViewController {
+	
+	    // MARK: - Public variables
+	
+	    /// List of ViewControllers. View Controller Titles are used as segment titles.
+	    public var items = [UIViewController]() {
+	        didSet {
+	            // Remove previous viewControllers
+	            for previousItem in oldValue {
+	                self.remove(viewControllerToRemove: previousItem)
+	            }
+	            // Remove segments
+	            segmentedControl.removeAllSegments()
+	
+	            // Add new segments and first viewController
+	            for (index, item) in items.enumerated() {
+	                segmentedControl.insertSegment(withTitle: item.title, at: index, animated: false)
+	
+	                if index == 0 {
+	                    segmentedControl.selectedSegmentIndex = 0
+	                    selectController(at: index)
+	                }
+	            }
+	        }
+	    }
+	
+	    // MARK: - Private variables
+	
+	    private let segmentedControl = UISegmentedControl()
+	    private let containerView = UIView()
+	    private let stackView = UIStackView()
+	    private let topStackView = UIStackView()
+	
+	    // MARK: - LifeCycle
+	
+	    public override func viewDidLoad() {
+	        super.viewDidLoad()
+	
+	        topStackView.axis = .vertical
+	        topStackView.alignment = .center
+	        topStackView.distribution = .equalSpacing
+	        topStackView.isLayoutMarginsRelativeArrangement = true
+	        topStackView.preservesSuperviewLayoutMargins = true
+	
+	        view.backgroundColor = .white
+	        stackView.axis = .vertical
+	        stackView.distribution = .fill
+	        stackView.alignment = .fill
+	
+	        view.addSubview(stackView)
+	        view.anchor(view: stackView, useSafeAnchors: false)
+	
+	        stackView.addArrangedSubview(topStackView)
+	        topStackView.addArrangedSubview(segmentedControl)
+	        stackView.addArrangedSubview(containerView)
+	
+	        segmentedControl.addTarget(self, action: #selector(segmentDidChange(segment:)), for: .valueChanged)
+	    }
+	
+	    // MARK: - Actions
+	
+	    @objc
+	    private func segmentDidChange(segment: UISegmentedControl) {
+	
+	        selectController(at: segment.selectedSegmentIndex)
+	
+	        print(segment.selectedSegmentIndex)
+	    }
+	
+	    private func selectController(at index: Int ) {
+	
+	        let item = items[index]
+	
+	        add(asChildViewController: item, anchored: true, subview: containerView)
+	    }
+	}
 ```
 
 Here you can see the layout is done using StackViews.
@@ -375,37 +375,37 @@ Also i do what i call "Playgrounds Driven Development", in which i use Xcode Pla
 The final block is the RootAppsCoordinator:
 
 ```swift
-public class RootAppsCoordinator: UIViewController, UINavigationControllerDelegate {
-    // MARK: - Private variables
-
-    private let segmentedViewController = SegmentedViewController()
-    private let freeAppsViewCoordinator = AppsViewCoordinator()
-    private let paidAppsViewCoordinator = AppsViewCoordinator()
-    private lazy var navController = UINavigationController(rootViewController: segmentedViewController)
-
-    // MARK: - Lifecycle
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        navController.delegate = self
-
-        freeAppsViewCoordinator.appType = .free
-        paidAppsViewCoordinator.appType = .paid
-
-        add(asChildViewController: navController)
-
-        segmentedViewController.items = [freeAppsViewCoordinator, paidAppsViewCoordinator]
-    }
-
-    // MARK: - UINavigationControllerDelegate
-
-    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        // Allows hiding the navigation bar for the rootViewController
-        let hide = viewController == navigationController.viewControllers.first
-        navigationController.setNavigationBarHidden(hide, animated: animated)
-    }
-}
+	public class RootAppsCoordinator: UIViewController, UINavigationControllerDelegate {
+	    // MARK: - Private variables
+	
+	    private let segmentedViewController = SegmentedViewController()
+	    private let freeAppsViewCoordinator = AppsViewCoordinator()
+	    private let paidAppsViewCoordinator = AppsViewCoordinator()
+	    private lazy var navController = UINavigationController(rootViewController: segmentedViewController)
+	
+	    // MARK: - Lifecycle
+	
+	    public override func viewDidLoad() {
+	        super.viewDidLoad()
+	
+	        navController.delegate = self
+	
+	        freeAppsViewCoordinator.appType = .free
+	        paidAppsViewCoordinator.appType = .paid
+	
+	        add(asChildViewController: navController)
+	
+	        segmentedViewController.items = [freeAppsViewCoordinator, paidAppsViewCoordinator]
+	    }
+	
+	    // MARK: - UINavigationControllerDelegate
+	
+	    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+	        // Allows hiding the navigation bar for the rootViewController
+	        let hide = viewController == navigationController.viewControllers.first
+	        navigationController.setNavigationBarHidden(hide, animated: animated)
+	    }
+	}
 ```
 
 This Coordinator configures the ViewControllers needed by the SegmentedViewController. It is also the delegate for the NavigationController to hide the Navigation bar on the first ViewController.
@@ -413,20 +413,20 @@ This Coordinator configures the ViewControllers needed by the SegmentedViewContr
 This coordinator is displayed as the main controller for the application in the app delegate:
 
 ```swift
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-
-    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-
-        let viewController = RootAppsCoordinator()
-
-        window?.rootViewController = viewController
-        window?.makeKeyAndVisible()
-
-        return true
-    }
-}
+	class AppDelegate: UIResponder, UIApplicationDelegate {
+	    var window: UIWindow?
+	
+	    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+	        window = UIWindow(frame: UIScreen.main.bounds)
+	
+	        let viewController = RootAppsCoordinator()
+	
+	        window?.rootViewController = viewController
+	        window?.makeKeyAndVisible()
+	
+	        return true
+	    }
+	}
 ```
 
 All the code above can be found in the following repository:
