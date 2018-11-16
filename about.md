@@ -4,12 +4,11 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+I'm a french developer writing native iOS apps since 2008.
+I'm "Old School" because i rather write all by code than use Storyboards or Xibs.
 
-### More Information
+I currently work at [Viseo] (https://www.viseo.com)
 
-A place to include any other types of information that you'd like to include about yourself.
+I spend my free time writing indie games for iOS.
 
-### Contact me
 
-[email@domain.com](mailto:email@domain.com)
