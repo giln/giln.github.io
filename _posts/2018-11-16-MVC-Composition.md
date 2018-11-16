@@ -33,12 +33,12 @@ So how do you compose ViewControllers? Just use Apple UIKit API available since 
 
 ```swift
 	/*
-      If the child controller has a different parent controller, it will first be removed from its current parent
-      by calling removeFromParentViewController. If this method is overridden then the super implementation must
-      be called.
-    */
-    @available(iOS 5.0, *)
-    open func addChild(_ childController: UIViewController)
+	  If the child controller has a different parent controller, it will first be removed from its current parent
+	  by calling removeFromParentViewController. If this method is overridden then the super implementation must
+	  be called.
+	*/
+	@available(iOS 5.0, *)
+	open func addChild(_ childController: UIViewController)
 
 ```
 
@@ -48,17 +48,17 @@ To use it, do the following:
 
 ```swift
 
-		 // Notify Child View Controller before
-        viewController.willMove(toParent: self)
-
-        // Add Child View as Subview
-        someView.addSubview(viewController.view)
-
-        // Add Child View Controller
-        addChild(viewController)
-        
-        // Notify Child View Controller after
-        viewController.didMove(toParent: self)
+	// Notify Child View Controller before
+	viewController.willMove(toParent: self)
+	
+	// Add Child View as Subview
+	someView.addSubview(viewController.view)
+	
+	// Add Child View Controller
+	addChild(viewController)
+	    
+	// Notify Child View Controller after
+	viewController.didMove(toParent: self)
 
 ```
 
