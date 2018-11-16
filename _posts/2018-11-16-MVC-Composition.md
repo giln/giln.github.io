@@ -99,7 +99,7 @@ Coordinator name is borrowed from Soroush Khanlou [http://khanlou.com/2015/10/co
 However, Coordinators in our example are also ViewControllers. They do not display or format Data, but they are responsible for Routing, navigation or fetching data.
 To read about some interesting ideas of why Coordinators could or should be ViewControllers, you can read the following articles by Dave DeLong:
 
-[https://davedelong.com/blog/2017/11/06/a-better-mvc-part-1-the-problems/] (https://davedelong.com/blog/2017/11/06/a-better-mvc-part-1-the-problems/)
+[https://davedelong.com/blog/2017/11/06/a-better-mvc-part-1-the-problems/](https://davedelong.com/blog/2017/11/06/a-better-mvc-part-1-the-problems/)
 
 On the other hand we have the other View Controllers (ListViewController and SegmentedViewController), who are just responsible for displaying data (glue code between Model and View).
 
