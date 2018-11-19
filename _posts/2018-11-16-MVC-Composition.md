@@ -90,6 +90,8 @@ For exemple, just for the main screen, we use 4 View Controllers.
 - SegmentedViewController -> Responsible for managing the segmented control and displaying the appropriate ViewController.
 - RootAppsCoordinator -> Main screen responsible for Routing, navigation and configuration.
 
+![Hierarchy](/assets/MVC-Composition/Hierarchy.jpg)
+
 The RootAppsCoordinator embeds the SegmentedViewController which embeds the AppViewCoordinator which embeds the ListViewController.
 
 All these inherit from UIViewController. However some are called Coordinators.
@@ -284,7 +286,7 @@ There are multipe ways to do this but we used a Reusable SegmentedViewController
 
 We created the SegmentedViewController as a container controller.
 This container (like UINavigationController or UIPageViewController are container Controllers), takes an array of ViewControllers as an input.
-It's responsiblity is to layout the segmented control above the content, and also to swith between the View Controllers when the user touches a segment.
+It's responsiblity is to layout the segmented control above the content, and also to switch between the View Controllers when the user touches a segment.
 
 Again this ViewController is highly reusable and can be used to display any view controllers throughout the application.
 
