@@ -1,6 +1,6 @@
 ---
 layout: standalone
-title: "Multipli" Privacy Policy
+title: "Multipli Privacy Policy"
 permalink: /MultipliPrivacyPolicy/
 ---
 

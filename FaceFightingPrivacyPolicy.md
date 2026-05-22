@@ -1,6 +1,6 @@
 ---
 layout: standalone
-title: "2 player games: Face Fighting" Privacy Policy
+title: "2 player games: Face Fighting Privacy Policy"
 permalink: /FaceFightingPrivacyPolicy/
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: standalone
-title: "Multiplicatoons" Privacy Policy
+title: "Multiplicatoons Privacy Policy"
 permalink: /MultiplicatoonsPrivacyPolicy/
 ---
 
