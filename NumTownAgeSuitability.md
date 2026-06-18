@@ -1,7 +1,7 @@
 ---
 layout: standalone
-title: "NumTownuaxxlity"
-permalink: /NumTownitability/
+title: "NumTown Age Suitability"
+permalink: /NumTownAgeSuitability/
 ---
 
 Age Suitability Statement
